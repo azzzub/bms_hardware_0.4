@@ -111,14 +111,14 @@ int bq769x0::begin(byte alertPin, byte bootPin)
   }
 
   // Boot IC if pin is defined (else: manual boot via push button has to be done before calling this method)
-  if (bootPin >= 0)
-  {
-    pinMode(bootPin, OUTPUT);
-    digitalWrite(bootPin, HIGH);
-    delay(5);                // wait 5 ms for device to receive boot signal (datasheet: max. 2 ms)
-    pinMode(bootPin, INPUT); // don't disturb temperature measurement
-    delay(10);               // wait for device to boot up completely (datasheet: max. 10 ms)
-  }
+  // if (bootPin >= 0)
+  // {
+  //   pinMode(bootPin, OUTPUT);
+  //   digitalWrite(bootPin, HIGH);
+  //   delay(5);                // wait 5 ms for device to receive boot signal (datasheet: max. 2 ms)
+  //   pinMode(bootPin, INPUT); // don't disturb temperature measurement
+  //   delay(10);               // wait for device to boot up completely (datasheet: max. 10 ms)
+  // }
 
   if (determineAddressAndCrc())
   {
@@ -377,25 +377,6 @@ bool bq769x0::enableDischarging()
 }
 
 //----------------------------------------------------------------------------
-void bq769x0::disableDischarging()
-{
-  LOG_PRINTLN("disableDischarging");
-  byte sys_ctrl2;
-  sys_ctrl2 = readRegister(SYS_CTRL2);
-  writeRegister(SYS_CTRL2, sys_ctrl2 & ~B00000010); // switch DSG off
-}
-
-//----------------------------------------------------------------------------
-void bq769x0::disableCharging()
-{
-  LOG_PRINTLN("disableCharging");
-  byte sys_ctrl2;
-  sys_ctrl2 = readRegister(SYS_CTRL2);
-  writeRegister(SYS_CTRL2, sys_ctrl2 & ~B00000001); // switch CHG on
-}
-
-//----------------------------------------------------------------------------
-
 void bq769x0::disableDischarging()
 {
   LOG_PRINTLN("disableDischarging");

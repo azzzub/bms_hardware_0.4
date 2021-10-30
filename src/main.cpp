@@ -8,6 +8,8 @@
 
 #define LED PB_13
 
+#define DEBUG
+
 bq769x0 BMS(bq76920, BMS_I2C_ADDRESS); // battery management system object
 HardwareSerial Serial3(PB_11, PB_10);
 
@@ -39,9 +41,23 @@ void resetSOC(void);
 
 void setup()
 {
+
   Serial.begin(19200);
   Serial3.begin(9600);
   pinMode(LED, OUTPUT);
+
+  // while (1)
+  // {
+  digitalWrite(LED, HIGH);
+  // delay(100);
+  // digitalWrite(LED, LOW);
+  // delay(100);
+  // digitalWrite(LED, HIGH);
+  // delay(100);
+  // digitalWrite(LED, LOW);
+  // delay(100);
+  // Serial.println("Test");
+  // }
 
   while (BMS.begin(BMS_ALERT_PIN, BMS_BOOT_PIN) == 1)
   {
